@@ -1,0 +1,665 @@
+﻿
+@{
+    ViewData["Title"] = "Flight";
+    Layout = "~/Areas/DashBoard/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <b style="font-size: 30px;">
+                                Flight Scheduling
+                            </b>
+                        </h3>
+                        <div class=" d-flex justify-content-end">
+                            <button id="Save" type="button" class="btn btn-sm btn-info mt-1 mr-2">Save</button>
+                            <button id="Edit" type="button" class="btn btn-sm btn-success mt-1">Update</button>
+                        </div>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5 pl-4">
+
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <label style="margin-right:53px;">ETD:</label>
+                                        <input type="hidden" id="FLTId"/>
+                                        <input id="ETD" type="date" class="form-control  form-control-sm " style=" width: 256px;">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:36px;">Flight #:</label>
+                                            <input id="FlightNumber" type="text" class="form-control form-control-sm" style="width: 80px;">
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+                                                <input id="SeatMap" type="checkbox" class="form-check-input ml-2">
+                                                <label class="mr-2">Enable SeatMap</label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:27px;">Dest 1&2:</label>
+                                            <select id="Dest1" class="form-control form-control-sm" style="width: 80px;">
+                                                <option>Des1</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group form-inline ml-2">
+                                            <select id="Dest2" class="form-control form-control-sm" style="width: 80px;">
+                                                <option>Des2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:33px;">Aircraft :</label>
+                                            <select id="AircraftType" class="form-control form-control-sm" style="width: 80px;">
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+                                                <input id="RCS" type="checkbox" class="form-check-input ml-2">
+                                                <label class="mr-2">Show RCS</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:26px;">Flt Color :</label>
+                                            <select id="FlightColor1" class="form-control form-control-sm" style="width: 80px;">
+                                                <option value="-" selected>Color 1</option>
+                                                <option value="BLK">Black</option>
+                                                <option value="BLU">Blue</option>
+                                                <option value="BRW">Brown</option>
+                                                <option value="GRY">Gray</option>
+                                                <option value="GRN">Green</option>
+                                                <option value="ORG">Orange</option>
+                                                <option value="PNK">Pink</option>
+                                                <option value="RED">Red</option>
+                                                <option value="WHT">White</option>
+                                                <option value="VLT">Violet</option>
+                                                <option value="YLW">Yellow</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-inline ml-2">
+                                            <select id="FlightColor2" class="form-control form-control-sm" style="width: 80px;">
+                                                <option value="-" selected>Color 2</option>
+                                                <option value="BLK">Black</option>
+                                                <option value="BLU">Blue</option>
+                                                <option value="BRW">Brown</option>
+                                                <option value="GRY">Gray</option>
+                                                <option value="GRN">Green</option>
+                                                <option value="ORG">Orange</option>
+                                                <option value="PNK">Pink</option>
+                                                <option value="RED">Red</option>
+                                                <option value="WHT">White</option>
+                                                <option value="VLT">Violet</option>
+                                                <option value="YLW">Yellow</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row pb-0 mb-0">
+                                        <label style="margin-right:43px;">Route :</label>
+                                        <div class="form-group">
+                                            <input id="Route" type="text" class="form-control form-control-sm" style=" width: 256px;height: 60px;" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:37px;">Minifest<br /> Colors :</label>
+                                            <select id="ManifestColor1" class="form-control form-control-sm" style="width: 80px;">
+                                                <option value="-1" selected>ManifestColor 1</option>
+                                                <option value="BLK">Black</option>
+                                                <option value="BLU">Blue</option>
+                                                <option value="BRW">Brown</option>
+                                                <option value="GRY">Gray</option>
+                                                <option value="GRN">Green</option>
+                                                <option value="ORG">Orange</option>
+                                                <option value="PNK">Pink</option>
+                                                <option value="RED">Red</option>
+                                                <option value="WHT">White</option>
+                                                <option value="VLT">Violet</option>
+                                                <option value="YLW">Yellow</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-inline ml-2">
+                                            <select id="ManifestColor2" class="form-control form-control-sm" style="width: 80px;">
+                                                <option value="-1" selected>ManifestColor 2</option>
+                                                <option value="BLK">Black</option>
+                                                <option value="BLU">Blue</option>
+                                                <option value="BRW">Brown</option>
+                                                <option value="GRY">Gray</option>
+                                                <option value="GRN">Green</option>
+                                                <option value="ORG">Orange</option>
+                                                <option value="PNK">Pink</option>
+                                                <option value="RED">Red</option>
+                                                <option value="WHT">White</option>
+                                                <option value="VLT">Violet</option>
+                                                <option value="YLW">Yellow</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-inline ml-2">
+                                            <select id="ManifestColor3" class="form-control form-control-sm" style="width: 80px;">
+                                                <option value="-1" selected>ManifestColor 3</option>
+                                                <option value="BLK">Black</option>
+                                                <option value="BLU">Blue</option>
+                                                <option value="BRW">Brown</option>
+                                                <option value="GRY">Gray</option>
+                                                <option value="GRN">Green</option>
+                                                <option value="ORG">Orange</option>
+                                                <option value="PNK">Pink</option>
+                                                <option value="RED">Red</option>
+                                                <option value="WHT">White</option>
+                                                <option value="VLT">Violet</option>
+                                                <option value="YLW">Yellow</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label class="mr-2">Usefule WT :</label>
+                                            <input id="UsefulWeight1" type="number" class="form-control  form-control-sm " style=" width: 80px;">
+                                        </div>
+                                        <div class="form-group form-inline ml-2">
+                                            <input id="UsefulWeight2" type="number" class="form-control  form-control-sm " style=" width: 80px;">
+                                        </div>
+                                        <div class="form-group form-inline ml-2">
+                                            <input id="UsefulWeight3" type="number" class="form-control  form-control-sm " style=" width: 80px;">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <div class="form-inline" style="margin-left: 93px;">
+                                                <select id="UsefulWeightColor1" class="form-control form-control-sm" style="width: 80px;">
+                                                    <option value="-1" selected>ManifestColor 4</option>
+                                                    <option value="BLK">Black</option>
+                                                    <option value="BLU">Blue</option>
+                                                    <option value="BRW">Brown</option>
+                                                    <option value="GRY">Gray</option>
+                                                    <option value="GRN">Green</option>
+                                                    <option value="ORG">Orange</option>
+                                                    <option value="PNK">Pink</option>
+                                                    <option value="RED">Red</option>
+                                                    <option value="WHT">White</option>
+                                                    <option value="VLT">Violet</option>
+                                                    <option value="YLW">Yellow</option>
+                                                </select>
+
+                                                <div class="form-group form-inline ml-2">
+                                                    <select id="UsefulWeightColor2" class="form-control form-control-sm" style="width: 80px;">
+                                                        <option value="-1" selected>ManifestColor 5</option>
+                                                        <option value="BLK">Black</option>
+                                                        <option value="BLU">Blue</option>
+                                                        <option value="BRW">Brown</option>
+                                                        <option value="GRY">Gray</option>
+                                                        <option value="GRN">Green</option>
+                                                        <option value="ORG">Orange</option>
+                                                        <option value="PNK">Pink</option>
+                                                        <option value="RED">Red</option>
+                                                        <option value="WHT">White</option>
+                                                        <option value="VLT">Violet</option>
+                                                        <option value="YLW">Yellow</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group form-inline ml-2">
+                                                    <select id="UsefulWeightColor3" class="form-control form-control-sm" style="width: 80px;">
+                                                        <option value="-1" selected>ManifestColor 6</option>
+                                                        <option value="BLK">Black</option>
+                                                        <option value="BLU">Blue</option>
+                                                        <option value="BRW">Brown</option>
+                                                        <option value="GRY">Gray</option>
+                                                        <option value="GRN">Green</option>
+                                                        <option value="ORG">Orange</option>
+                                                        <option value="PNK">Pink</option>
+                                                        <option value="RED">Red</option>
+                                                        <option value="WHT">White</option>
+                                                        <option value="VLT">Violet</option>
+                                                        <option value="YLW">Yellow</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label class="mr-2">Usefule WT :</label>
+                                            <input id="UsefulWeightBeta1" type="number" class="form-control  form-control-sm " style=" width: 80px;">
+                                        </div>
+                                        <div class="form-group form-inline ml-2">
+                                            <input id="UsefulWeightBeta2" type="number" class="form-control  form-control-sm " style=" width: 80px;">
+                                        </div>
+                                        <div class="form-group form-inline ml-2">
+                                            <input id="UsefulWeightBeta3" type="number" class="form-control  form-control-sm " style=" width: 80px;">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:43px;">Pilot1 :</label>
+                                            <select id="Pilot1" class="form-control form-control-sm" style="width: 258px;">
+                                                <option>----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:43px;">Pilot2 :</label>
+                                            <select id="Pilot2" class="form-control form-control-sm" style="width: 258px;">
+                                                <option>----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:20px;">Observer :</label>
+                                            <select id="Observer" class="form-control form-control-sm" style="width: 258px;">
+                                                <option>----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:59px;">FA1 :</label>
+                                            <select id="FA1" class="form-control form-control-sm" style="width: 258px;">
+                                                <option>----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:59px;">FA2 :</label>
+                                            <select id="FA2" class="form-control form-control-sm" style="width: 258px;">
+                                                <option>----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:16px;">Customer :</label>
+                                            <select id="Customer" class="form-control form-control-sm" style="width: 70px;">
+                                                <option>----</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class="ml-4">&nbsp;&nbsp;Use PaxList</label>
+                                                <input id="PaxList" type="checkbox" class="form-check-input ml-3">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:54px;">Fuel :</label>
+                                            <input id="Fuel" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class="ml-3">&nbsp;&nbsp;Split Gender</label>
+                                                <input id="SplitGender" type="checkbox" class="form-check-input ml-3">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:11px;">Max Cargo :</label>
+                                            <input id="MaxCargo" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-2 mr-2">Temperature :</label>
+                                                <input id="Temperature" type="number" class="form-control form-control-sm" style="width: 40px; height: 25px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:45px;">Rsrvd Seats :</label>
+                                            <input id="RsrvdSeats" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-2 mr-3">Gate# :</label>
+                                                <input id="GateNumber" type="number" class="form-control form-control-sm" style="width: 40px; height: 25px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:68px;">Frt + Bag:</label>
+                                            <input id="Frt" type="number" class="form-control form-control-sm" style="width: 45px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <label class="ml-2 mr-2">+</label>
+                                            <input id="Bag" type="number" class="form-control form-control-sm" style="width: 45px;">
+
+                                        </div>
+
+                                        <div class="form-group form-inline">
+
+                                            <label class="ml-2 mr-2">=</label>
+                                            <input id="FrtBagTotal" type="number" class="form-control form-control-sm" style="width: 45px;">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:43px;">FWD Cargo 1:</label>
+                                            <input id="FWDcargo1" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-3 mr-3">2:</label>
+                                                <input id="FWDcargo2" type="number" class="form-control form-control-sm" style="width:70px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:43px;">FWD Cargo 3:</label>
+                                            <input id="FWDcargo3" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-3 mr-3">4:</label>
+                                                <input id="FWDcargo4" type="number" class="form-control form-control-sm" style="width:70px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:48px;">AFT Cargo 1:</label>
+                                            <input id="AFTcargo1" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-3 mr-3">2:</label>
+                                                <input id="AFTcargo2" type="number" class="form-control form-control-sm" style="width:70px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:48px;">AFT Cargo 3:</label>
+                                            <input id="AFTcargo3" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-3 mr-3">4:</label>
+                                                <input id="AFTcargo4" type="number" class="form-control form-control-sm" style="width:70px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:48px;">AFT Cargo 5:</label>
+                                            <input id="AFTcargo5" type="number" class="form-control form-control-sm" style="width: 70px;">
+
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-3 mr-3">6:</label>
+                                                <input id="AFTcargo6" type="number" class="form-control form-control-sm" style="width:70px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:63px;">Flt Status:</label>
+                                            <select id="FlightStatus" class="form-control form-control-sm" style="width: 186px;">
+                                                <option>----</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group form-inline">
+                                            <label style="margin-right:35px;">Agent:</label>
+                                            <select id="Agent" class="form-control form-control-sm" style="width: 106px;">
+                                                <option>----</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group form-inline">
+                                            <div class="form-check-inline">
+
+                                                <label class=" ml-3 mr-3">ATD:</label>
+                                                <input id="ATD" type="number" class="form-control form-control-sm" style="width:70px;">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <label style="margin-right:11px;">Remarks :</label>
+                                        <div class="form-group">
+                                            <input id="Remarks" type="text" class="form-control form-control-sm" style=" width: 241px;height: 60px;" />
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                            <div class="col-md-7">
+                                <table id="FlightTable" class="table table-responsive  table-bordered" style=" max-height: 600px; width:100%; ">
+                                    <thead>
+                                        <tr>
+                                            <th>FltID</th>
+                                            <th>FltDateTime</th>
+                                            <th>FltNumber</th>
+                                            <th>Dest1</th>
+                                            <th>Dest2</th>
+                                            <th>FltColor</th>
+                                            <th>FltStatus</th>
+                                            <th>FltRoute</th>
+                                            <th>Pilot1</th>
+                                            <th>Pilot2</th>
+                                            <th>Pilot3</th>
+                                            <th>FA1</th>
+                                            <th>FA2</th>
+                                            <th>Customer</th>
+                                            <th>ReservedSeats</th>
+                                            <th>SeatMap</th>
+                                            <th>Payload</th>
+                                            <th>Fuel</th>
+                                            <th>Temperature</th>
+                                            <th>FwdCargo1</th>
+                                            <th>FwdCargo2</th>
+                                            <th>FwdCargo3</th>
+                                            <th>FwdCargo4</th>
+                                            <th>AftCargo1</th>
+                                            <th>AftCargo2</th>
+                                            <th>AftCargo3</th>
+                                            <th>AftCargo4</th>
+                                            <th>AftCargo5</th>
+                                            <th>AftCargo6</th>
+                                            <th>GateNum</th>
+                                            <th>FltTimeStamp</th>
+                                            <th>Agent</th>
+                                            <th>ClosingAgent</th>
+                                            <th>ClosingTimeStamp</th>
+                                            <th>ActualDepTime</th>
+                                            <th>FltRemarks</th>
+                                            <th>SplitGender</th>
+                                            <th>subManifestColor</th>
+                                            <th>showRCS</th>
+                                            <th>FltTSEdit</th>
+                                            <th>FltTSEditAgent</th>
+                                            <th>Aircraft</th>
+                                            <th>Actions</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </section>
+
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+
+
+
+<script type="text/x-handlebars" id="temp_DropDownaircraft">
+    <option value="-1" selected disabled>Aircraft</option>
+    {{#each this}}
+    <option value="{{aircraftID}}">{{acReg}}</option>
+    {{/each}}
+
+</script>
+<script type="text/x-handlebars" id="temp_DropDowndest1">
+    <option value="-1" selected disabled>Dest 1</option>
+    {{#each this}}
+    <option value="{{destID}}">
+        {{destICAO}} | {{destIATA}} | {{destName}}
+    </option>
+    {{/each}}
+
+</script>
+<script type="text/x-handlebars" id="temp_DropDowndest2">
+    <option value="-1" selected disabled>Dest 2</option>
+    {{#each this}}
+    <option value="{{destID}}">{{destICAO}} | {{destIATA}} | {{destName}}</option>
+    {{/each}}
+
+</script>
+<script type="text/x-handlebars" id="temp_DropDownpilot1">
+    <option value="-1" selected disabled>Pilot 1</option>
+
+    {{#each this}}
+    <option value="{{pilotID}}">{{pilotName}} | {{pilotSurname}}</option>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" id="temp_DropDownpilot2">
+    <option value="-1" selected disabled>Pilot 2</option>
+
+    {{#each this}}
+    <option value="{{pilotID}}">{{pilotName}} | {{pilotSurname}}</option>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" id="temp_DropDownobserver">
+    <option value="-1" selected disabled> Observer </option>
+
+    {{#each this}}
+    <option value="{{pilotID}}">{{pilotName}} | {{pilotSurname}}</option>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" id="temp_DropDownFA1">
+    <option value="-1" selected disabled> FA1 </option>
+
+    {{#each this}}
+    <option value="{{staffID}}">{{staffName}} | {{staffSurname}}</option>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" id="temp_DropDownFA2">
+    <option value="-1" selected disabled> FA2 </option>
+
+    {{#each this}}
+    <option value="{{staffID}}">{{staffName}} | {{staffSurname}}</option>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" id="temp_DropDownAgent">
+    <option value="-1" selected disabled> Agent </option>
+
+    {{#each this}}
+    <option value="{{staffID}}">{{staffName}} | {{staffSurname}}</option>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" id="temp_DropDowncustomer">
+    <option value="-1" selected disabled> Customer </option>
+    {{#each this}}
+    <option value="{{custID}}">{{custName}}</option>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" id="temp_DropDownflightStatus">
+    <option value="-1" selected disabled> Status </option>
+    {{#each this}}
+    <option value="{{fltStatusID}}">{{fltStatus}}</option>
+    {{/each}}
+</script>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous"></script>
+
+<script src='~/js/FlightSchedule.js'></script>
+
+
+
